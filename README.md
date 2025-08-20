@@ -108,40 +108,59 @@ python app/serp_monitor.py serve
 Приклад `.env.example` (скорочено, адаптований під ваш `docker-compose.yml`):
 
 ```dotenv
+# -------------------------------
 # Scheduling
+# -------------------------------
+# Run interval in seconds (default 6h = 21600)
 RUN_EVERY_SECONDS=21600
-# або CRON (альтернатива):
-# SCHEDULE_CRON=5 8 * * *
 
+# -------------------------------
 # Providers
+# -------------------------------
+# Primary: Serper.dev API key (https://serper.dev)
 SERPER_API_KEY=your_serper_api_key_here
+
+# Optional fallback: SerpAPI (https://serpapi.com)
 # SERPAPI_API_KEY=your_serpapi_api_key_here
 
+# -------------------------------
 # Localization
+# -------------------------------
+# Google Search country (gl=geo location, e.g., ua=Ukraine, us=USA)
 GL=ua
+# Google Search UI language
 HL=uk
+# How many top results to fetch (default 30)
 TOP_N=30
 
+# -------------------------------
 # HTTP / Performance
+# -------------------------------
 HTTP_USER_AGENT="Mozilla/5.0 (SERP-Monitor/2.0)"
 HTTP_TIMEOUT=10
 HTTP_DELAY=0.2
 MAX_CONTACT_PAGES=3
 MAX_WORKERS=10
 
+# -------------------------------
 # Storage & Exports
-DB_PATH=/data/serp.db
-EXPORT_DIR=/data/exports
-PUSH_TO_SHEETS=0
+# -------------------------------
+DB_PATH=./serp.db
+EXPORT_DIR=./exports
+
+# Push results to Google Sheets (1 = yes, 0 = no)
+PUSH_TO_SHEETS=1
 SHEETS_NAME="SERP Monitor Results"
-# Якщо пушите в існуючий Sheet:
-# SHEETS_KEY=1AbCdEfGh...   # <— ID таблиці (див. нижче)
 
-# Google Sheets creds (якщо PUSH_TO_SHEETS=1)
-# GOOGLE_SHEETS_CREDENTIALS_JSON=/config/service_account.json
-
+# -------------------------------
+# Google Sheets (only if PUSH_TO_SHEETS=1)
+# -------------------------------
+GOOGLE_SHEETS_CREDENTIALS_JSON=service_account.json
+SHEETS_KEY=your_google_sheets_key_here
+# -------------------------------
 # Keywords
-KEYWORDS_PATH=/config/keywords.txt
+# -------------------------------
+KEYWORDS_PATH=keywords.txt
 ```
 
 ---

@@ -1,28 +1,30 @@
 # Кроки роботи з проєктом
+1. **Дослідив способи отримання результатів від пошуковика**
+   * Вибрав Serper.dev як основний API-провайдер для Google SERP. Чому? Легальний, стабільний, без симуляції браузера та без ризиків ToS. SerpAPI як fallback на випадок вичерпання квоти. *
 
-1. **Підготовка оточення**
+2. **Підготовка оточення**
 
    * Створив `.env` із ключами (`SERPER_API_KEY`, опційно `SERPAPI_API_KEY`), регіоном (`GL/HL`), інтервалом запуску (`RUN_EVERY_SECONDS` або `SCHEDULE_CRON`).
    * Задав ключові слова в `config/keywords.txt` (1 запит на рядок).
 
-2. **Запуск**
+3. **Запуск**
 
    * **Docker:** `docker compose up -d --build` → сервіс у режимі `serve` із вбудованим планувальником.
    * **Локально (без Docker):** `python app/serp_monitor.py run ...` (разовий прогін) або `serve` (демон).
 
-3. **Перевірка артефактів**
+4. **Перевірка артефактів**
 
    * База: `data/serp.db`.
    * Експорти: `data/exports/snapshot_YYYY-MM-DD.csv` і `domains_YYYY-MM-DD.csv`.
    * Логи: `docker compose logs -f serp-monitor`.
 
-4. **Google Sheets (опційно)**
+5. **Google Sheets (опційно)**
 
    * Увімкнув Sheets & Drive API, створив **Service Account**, додав його e-mail у **Editors** до таблиці.
    * В `.env` задав `PUSH_TO_SHEETS=1`, `GOOGLE_SHEETS_CREDENTIALS_JSON`, `SHEETS_KEY` (ID з URL).
    * Пуш іде **в уже існуючий Sheet** (через `open_by_key`), аркуші — `YYYY-MM-DD` та `domains`.
 
-5. **Щоденний моніторинг**
+6. **Щоденний моніторинг**
 
    * Планувальник запускає збір SERP, фіксує позиції Топ-10/30, виявляє **нові домени**, паралельно збагачує їх (тип сайту + контакти), оновлює CSV/DB/Sheets.
 
