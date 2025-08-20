@@ -4,6 +4,11 @@
 
 ---
 
+# Зразок тестової таблиці Google Sheets з результатами
+https://docs.google.com/spreadsheets/d/1NmjntRxvrQJnMitxpE9JMpo2uqMfH8d0w_iADcne63A/edit?usp=sharing
+
+
+
 ## Зміст
 
 * [Архітектура](#архітектура)
