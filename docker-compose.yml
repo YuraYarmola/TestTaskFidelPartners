@@ -1,0 +1,39 @@
+version: "3.9"
+services:
+  serp-monitor:
+    build: .
+    container_name: serp-monitor
+    restart: unless-stopped
+    environment:
+      # Scheduling:
+      RUN_EVERY_SECONDS: 21600 # run every 6h
+
+      # Providers
+      SERPER_API_KEY: ${SERPER_API_KEY}
+      # SERPAPI_API_KEY: ${SERPAPI_API_KEY}
+
+      GL: ${GL:-ua}
+      HL: ${HL:-uk}
+      TOP_N: ${TOP_N:-30}
+
+      # HTTP/Perf
+      HTTP_USER_AGENT: "Mozilla/5.0 (SERP-Monitor/2.0)"
+      HTTP_TIMEOUT: ${HTTP_TIMEOUT:-10}
+      HTTP_DELAY: ${HTTP_DELAY:-0.2}
+      MAX_CONTACT_PAGES: ${MAX_CONTACT_PAGES:-3}
+      MAX_WORKERS: ${MAX_WORKERS:-10}
+
+      # Storage & exports
+      DB_PATH: ${DB_PATH:-./serp.db}
+      EXPORT_DIR: ${EXPORT_DIR:-./exports}
+      PUSH_TO_SHEETS: ${PUSH_TO_SHEETS:-0}
+      SHEETS_NAME: ${SHEETS_NAME:-"SERP Monitor Results"}
+
+    # Google Sheets creds if PUSH_TO_SHEETS=1
+      GOOGLE_SHEETS_CREDENTIALS_JSON: ${GOOGLE_SHEETS_CREDENTIALS_JSON:-service_account.json}
+      SHEETS_KEY: ${SHEETS_KEY}
+    # Path to keywords
+      KEYWORDS_PATH: ${KEYWORDS_PATH:-keywords.txt}
+
+    volumes:
+      - ./.:/app
