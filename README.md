@@ -40,7 +40,7 @@ https://docs.google.com/spreadsheets/d/1NmjntRxvrQJnMitxpE9JMpo2uqMfH8d0w_iADcne
   * (опційно) **Google Sheets**
 * **Розклад:** вбудований планувальник
 
-  * `RUN_EVERY_SECONDS` (інтервал) **або** `SCHEDULE_CRON` (cron-рядок типу `5 8 * * *`).
+  * `RUN_EVERY_SECONDS` (інтервал).
 * **Конфігурація:** через `.env` / env vars.
 
 ---
